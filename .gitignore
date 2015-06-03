@@ -1,0 +1,12 @@
+ # ignore all files starting with .
+\.*
+
+git-it/patchwork
+
+# include .gitignore (i.e. do NOT ignore)
+!.gitignore
+
+# ignore OS files
+.DS_Store
+.trashes
+.localized
