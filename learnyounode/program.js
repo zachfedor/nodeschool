@@ -1,10 +1,13 @@
 var fs = require('fs');
 
-if( process.argv.length > 2 ) {
-    var file = process.argv[ 2 ];
-    var buf = fs.readFileSync( file );
-    var str = buf.toString();
-    var array = str.split( '\n' );
+fs.readFile( process.argv[ 2 ], 'utf8', printNewLines );
 
-    console.log( array.length - 1 );
+function printNewLines( err, data ) {
+    if( err ) {
+        console.log( err );
+    } else {
+        var lines = data.toString().split( '\n' );
+
+        console.log( lines.length - 1 );
+    }
 }
