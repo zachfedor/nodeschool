@@ -1,9 +1,10 @@
+var fs = require('fs');
+
 if( process.argv.length > 2 ) {
-    var x = 0;
+    var file = process.argv[ 2 ];
+    var buf = fs.readFileSync( file );
+    var str = buf.toString();
+    var array = str.split( '\n' );
 
-    for( var i = 2; i < process.argv.length; i++ ) {
-        x += Number( process.argv[ i ]);
-    }
-
-    console.log( x );
+    console.log( array.length - 1 );
 }
