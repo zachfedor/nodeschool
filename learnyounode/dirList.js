@@ -1,21 +1,16 @@
-module.exports = function( dir, ext, cb ) {
-    var fs = require('fs');
-    var path = require('path');
+var fs = require('fs');
+var path = require('path');
 
+module.exports = function( dir, ext, cb ) {
     fs.readdir( dir, function( err, list ) {
         if( err ) {
             return cb( err );
         }
 
-        ext = '.' + ext;
-        var array = [];
-
-        for( var i = 0; i < list.length; i++ ) {
-            if( path.extname( list[ i ] ) == ext ) {
-                array.push( list[ i ]);
-            }
-        }
+        list = list.filter( function( file ) {
+            return path.extname( file ) === '.' + ext;
+        });
         
-        return cb( null, array );
+        cb( null, list );
     });
 }

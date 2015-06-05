@@ -1,13 +1,11 @@
 var dirList = require( './dirList.js' );
 
-dirList( process.argv[ 2 ], process.argv[ 3 ], printDirList );
-
-function printDirList( err, data ) {
+dirList( process.argv[ 2 ], process.argv[ 3 ], function( err, list ) {
     if( err ) {
-        console.log( "There was an error" );
+        return console.log( "There was an error: " + err );
     } else {
-        data.forEach( function( item ) {
+        list.forEach( function( item ) {
             console.log( item );
         });
     }
-}
+});
