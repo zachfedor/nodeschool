@@ -1,10 +1,13 @@
-var fs = require('fs');
+var dirList = require( './dirList.js' );
 
-fs.readFile( process.argv[ 2 ], 'utf8', function( err, data ) {
+dirList( process.argv[ 2 ], process.argv[ 3 ], printDirList );
+
+function printDirList( err, data ) {
     if( err ) {
-        console.log( err );
+        console.log( "There was an error" );
     } else {
-        var lines = data.split( '\n' );
-        console.log( lines.length - 1 );
+        data.forEach( function( item ) {
+            console.log( item );
+        });
     }
-});
+}
