@@ -1,11 +1,7 @@
-var dirList = require( './dirList.js' );
+var http = require( 'http' );
 
-dirList( process.argv[ 2 ], process.argv[ 3 ], function( err, list ) {
-    if( err ) {
-        return console.log( "There was an error: " + err );
-    } else {
-        list.forEach( function( item ) {
-            console.log( item );
-        });
-    }
+http.get( process.argv[ 2 ], function( response ) {
+    response.on( "data", function( data ) {
+        console.log( data.toString() );
+    });
 });
