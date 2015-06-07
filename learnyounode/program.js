@@ -1,32 +1,27 @@
 var http = require( 'http' );
 var concatStream = require( 'concat-stream' );
-var content = {};
+var content = [];
+var count = 0;
 
 function printContent() {
-    if( content.one && content.two && content.three ) {
-        console.log( content.one );
-        console.log( content.two );
-        console.log( content.three );
+    for( var i = 0; i < 3; i++ ) {
+        console.log( content[ i ] );
     }
 }
 
-http.get( process.argv[ 2 ], function( response ) {
-    response.pipe( concatStream( function( data ) {
-        content.one = data.toString();
-        printContent();
-    }));
-});
+function getContent( index ) {
+    http.get( process.argv[ 2 + index ], function( response ) {
+        response.pipe( concatStream( function( data ) {
+            content[ index ] = data.toString();
+            count++;
 
-http.get( process.argv[ 3 ], function( response ) {
-    response.pipe( concatStream( function( data ) {
-        content.two = data.toString();
-        printContent();
-    }));
-});
+            if( count == 3 ) {
+                printContent();
+            }
+        }));
+    });
+}
 
-http.get( process.argv[ 4 ], function( response ) {
-    response.pipe( concatStream( function( data ) {
-        content.three = data.toString();
-        printContent();
-    }));
-});
+for( var i = 0; i < 3; i++ ) {
+    getContent( i );
+}
