@@ -1,8 +1,12 @@
 var net = require( 'net' );
 var moment = require( 'moment' );
-var data = moment().format( 'YYYY-MM-DD HH:mm' ) + "\n";
+
+function now() {
+    return moment().format( 'YYYY-MM-DD HH:mm' );
+}
 
 var server = net.createServer( function( socket ) {
-    socket.end( data );
+    socket.end( now() + '\n' );
 });
-server.listen( process.argv[ 2 ]);
+
+server.listen( Number( process.argv[ 2 ]));
