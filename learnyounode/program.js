@@ -1,12 +1,8 @@
-var net = require( 'net' );
-var moment = require( 'moment' );
+var fs = require( 'fs' );
+var http = require( 'http' );
 
-function now() {
-    return moment().format( 'YYYY-MM-DD HH:mm' );
-}
-
-var server = net.createServer( function( socket ) {
-    socket.end( now() + '\n' );
+var server = http.createServer( function( request, response ) {
+    fs.createReadStream( process.argv[ 3 ]).pipe( response );
 });
 
 server.listen( Number( process.argv[ 2 ]));
