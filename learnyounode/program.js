@@ -1,17 +1,14 @@
 var http = require( 'http' );
+var map = require( 'through2-map' );
 
 var server = http.createServer( function( request, response ) {
-    if( request.method == 'POST' ) {
-        response.writeHead( 200, { 'content-type': 'text/html' });
-
-        request.on( 'data', function( chunk ) {
-            response.write( chunk.toString().toUpperCase());
-        });
-
-        request.on( 'end', function() {
-            response.end();
-        });
+    if( request.method != 'POST' ) {
+        return response.end( 'Send via POST, please\n' );
     }
+
+    request.pipe( map( function( chunk ) {
+        return chunk.toString().toUpperCase();
+    })).pipe( response );
 });
 
 server.listen( Number( process.argv[ 2 ]));
