@@ -1,3 +1,4 @@
-var emotify = require( process.argv[ 2 ] );
+var assert = require( 'assert' );
+var isCoolNumber = require( process.argv[ 2 ]);
 
-console.log( emotify( process.argv[ 3 ]));
+assert( isCoolNumber( 42 ), "Number is not cool" );
