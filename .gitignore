@@ -1,6 +1,8 @@
  # ignore all files starting with .
 \.*
 
+*/node_modules/
+
 git-it/patchwork
 
 # include .gitignore (i.e. do NOT ignore)
