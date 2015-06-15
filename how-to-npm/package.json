@@ -1,0 +1,20 @@
+{
+  "name": "@zachfedor/how-to-npm",
+  "version": "1.0.1",
+  "description": "How-To-NPM's tutorial package",
+  "repository": "http://github.com/zachfedor/nodeschool/",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "nodeschool",
+    "how-to-npm",
+    "tutorial"
+  ],
+  "author": "zachfedor",
+  "license": "ISC",
+  "dependencies": {
+    "@linclark/pkg": "^1.0.2"
+  }
+}
