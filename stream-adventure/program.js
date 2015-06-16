@@ -1,14 +1,21 @@
 var fs = require( 'fs' );
 var through = require( 'through2' );
-var stream = through( write, end );
+var split = require( 'split' );
+var count = 1;
 
-function write( buffer, encoding, next ) {
-    this.push( buffer.toString().toUpperCase() );
-    next();
-}
+process.stdin
+    .pipe( split() )
+    .pipe( through( function( line, _, next ) {
+        line = line.toString();
 
-function end( done ) {
-    done();
-}
+        if( count % 2 == 0 ) {
+            line = line.toUpperCase();
+        } else {
+            line = line.toLowerCase();
+        }
 
-process.stdin.pipe( stream ).pipe( process.stdout );
+        count++;
+        console.log( line );
+        next();
+    }))
+    .pipe( process.stdout );
