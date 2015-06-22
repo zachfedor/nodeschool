@@ -1,21 +1,10 @@
-var fs = require( 'fs' );
-var through = require( 'through2' );
-var split = require( 'split' );
-var count = 1;
+var concat = require( 'concat-stream' );
 
 process.stdin
-    .pipe( split() )
-    .pipe( through( function( line, _, next ) {
-        line = line.toString();
+    .pipe( concat( function( data ) {
+        var result = data.toString();
 
-        if( count % 2 == 0 ) {
-            line = line.toUpperCase();
-        } else {
-            line = line.toLowerCase();
-        }
+        result = result.split( '' ).reverse().join( '' );
 
-        count++;
-        console.log( line );
-        next();
-    }))
-    .pipe( process.stdout );
+        process.stdout.write( result );
+    }));
