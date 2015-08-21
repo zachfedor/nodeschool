@@ -1,8 +1,18 @@
-var concat = require( 'concat-stream' );
+var http = require( 'http' );
+var through = require( 'through2' );
+var stream = through( write, end );
 
-process.stdin
-    .pipe( concat( function( data ) {
-        var result = data.toString().split( '' ).reverse().join( '' );
-        console.log( result );
-        //process.stdout.write( result );
-    }));
+var server = http.createServer( function( req, res ) {
+    if( req.method === 'POST' ) {
+        req.pipe( stream ).pipe( process.stdout );
+    }
+    res.end();
+});
+
+function write( buf, _, next ) {
+    this.push( buf.toString().toUpperCase() );
+    next();
+}
+function end( done ) { done(); }
+
+server.listen( process.argv[ 2 ]);
